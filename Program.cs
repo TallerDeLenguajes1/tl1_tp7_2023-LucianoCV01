@@ -1,70 +1,50 @@
-﻿using EspacioCalculadora;
+﻿using EspacioEmpleado;
 internal class Program
 {
     private static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
 
-        Calculadora numero = new(ingresarNumero());
+        Empleado persona1 = new("Luis", "Gonzales", new(2000, 7, 12), 's', 'm', new(2018, 10, 22), 45000, cargos.Auxiliar);
+        Empleado persona2 = new("Catalina", "Torres", new(1997, 12, 4), 'c', 'f', new(2009, 3, 3), 95000, cargos.Especialista);
+        Empleado persona3 = new("Carlos", "Cruz", new(1990, 2, 5), 'c', 'm', new(2008, 6, 13), 65000, cargos.Ingeniero);
 
-        Console.WriteLine("El numero es: " + numero.Resultado);
+        double totalSalarios = persona1.Salario(persona1.CalcularAntigüedad()) + persona2.Salario(persona2.CalcularAntigüedad()) + persona3.Salario(persona3.CalcularAntigüedad());
+        Console.WriteLine("Monto total: $ " + totalSalarios);
 
-        double opcion=0;
-        double termino=0;
-        double flag;
-        do
+        int jubilacion1 = persona1.CalcularJubilacion(persona1.CalcularEdad());
+        int jubilacion2 = persona2.CalcularJubilacion(persona2.CalcularEdad());
+        int jubilacion3 = persona3.CalcularJubilacion(persona3.CalcularEdad());
+
+        if (jubilacion1 <= jubilacion2 && jubilacion1 <= jubilacion3)
         {
-            Console.WriteLine("------ Operaciones ------");
-            Console.WriteLine("1) Sumar");
-            Console.WriteLine("2) Restar");
-            Console.WriteLine("3) Multiplicar");
-            Console.WriteLine("4) Dividir");
-            Console.WriteLine("5) Limpiar");
-
-            opcion = ingresarNumero();
-
-            termino = ingresarNumero();
-
-            switch (opcion)
+            mostrarDatos(persona1);
+        } else
+        {
+            if (jubilacion2 <= jubilacion1 && jubilacion2 <= jubilacion3)
             {
-                case 1:
-                    numero.Sumar(termino);
-                    break;
-                case 2:
-                    numero.Restar(termino);
-                    break;
-                case 3:
-                    numero.Multiplicar(termino);
-                    break;
-                case 4:
-                    numero.Dividir(termino);
-                    break;
-                default:
-                    numero.Limpiar();
-                    break;
+                mostrarDatos(persona2);
+            } else
+            {
+                mostrarDatos(persona3);
             }
-
-            Console.WriteLine("El numero es: " + numero.Resultado);
-
-            Console.WriteLine("Quiere continuar? (0=no, 1=si)");
-            flag = ingresarNumero();
-
-        } while (flag == 1);
-
-        Console.WriteLine("El numero es: " + numero.Resultado);
+        }
     }
-
-    public static double ingresarNumero()
+    public static void mostrarDatos(Empleado persona)
     {
-        string? cadena;
-        double numero = 0;   
-        bool control = false;
-        do
-        {
-            Console.WriteLine("Ingrese un numero");
-            cadena = Console.ReadLine();
-            control = double.TryParse(cadena, out numero);
-        } while (!control);
-        return numero;
+        Console.WriteLine("Nombre: " + persona.Nombre);
+        Console.WriteLine("Apellido: " + persona.Apellido);
+        Console.WriteLine("Fecha de Nacimiento: " + persona.FechaNacimiento);
+        Console.WriteLine("Estado civil: " + persona.EstadoCivil);
+        Console.WriteLine("Genero: " + persona.Genero);
+        Console.WriteLine("Fecha de Ingreso: " + persona.FechaIngreso);
+        Console.WriteLine("Sueldo Basico: $" + persona.SueldoBasico);
+        Console.WriteLine("Cargo: " + persona.Cargo);
+        int antiguedad = persona.CalcularAntigüedad();
+        Console.WriteLine("Antiguedad: " + antiguedad);
+        int edad = persona.CalcularEdad();
+        Console.WriteLine("Edad: " + edad);
+        Console.WriteLine("Jubilacion: " + persona.CalcularJubilacion(edad));
+        Console.WriteLine("Salario: $" + persona.Salario(antiguedad));
     }
 }
