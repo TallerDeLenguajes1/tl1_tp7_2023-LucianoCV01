@@ -1,0 +1,2 @@
+- Investigue qué función cumple el parámetro –output y que consecuencias trae llamarlo de la manera indicada. 
+El parámetro --output en el comando dotnet new console se utiliza para especificar la carpeta de salida donde se creará el proyecto de consola. Al utilizar --output ., le estás diciendo al comando que cree el proyecto en la carpeta actual.
